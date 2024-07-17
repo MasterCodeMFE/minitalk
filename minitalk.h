@@ -32,4 +32,5 @@ void	ft_unsing(int nbr, char *base, int *len);
 void	ft_putnbr_base(int nbr, char *base, int *len);
 int		check_base(char *base);
 void	ft_putchar(char c, int fd, int *len);
+void	*ft_memset(void *b, int c, size_t len);
 #endif
