@@ -12,7 +12,7 @@
 
 #include <stdarg.h>
 #include <unistd.h>
-#include "./../minitalk.h"
+#include "./../minitalk_bonus.h"
 
 void	ft_hexa(unsigned long long nb, char *base, int *len)
 {

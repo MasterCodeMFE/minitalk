@@ -10,10 +10,14 @@
 #                                                                              #
 # **************************************************************************** #
 
+# Variables
 NAMECLIENT = client
 NAMESERVER = server
-GCC = gcc
+NAMECLIENT_BONUS = client_bonus
+NAMESERVER_BONUS = server_bonus
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+
 SRCSCLIENT = src/client.c \
              src/ft_printf.c \
              src/ft_printf_aux.c
@@ -22,32 +26,53 @@ SRCSSERVER = src/server.c \
              src/ft_printf.c \
              src/ft_printf_aux.c
 
+SRCSCLIENT_BONUS = src/client_bonus.c \
+                   src/ft_printf_bonus.c \
+                   src/ft_printf_aux_bonus.c
+
+SRCSSERVER_BONUS = src/server_bonus.c \
+                   src/ft_printf_bonus.c \
+                   src/ft_printf_aux_bonus.c
+
 OBJDIR := src/obj
 OBJSCLIENT := $(SRCSCLIENT:src/%.c=$(OBJDIR)/%.o)
 OBJSERVER := $(SRCSSERVER:src/%.c=$(OBJDIR)/%.o)
-RM = rm -rf
+OBJSCLIENT_BONUS := $(SRCSCLIENT_BONUS:src/%.c=$(OBJDIR)/%.o)
+OBJSERVER_BONUS := $(SRCSSERVER_BONUS:src/%.c=$(OBJDIR)/%.o)
 
-all: $(NAMECLIENT) $(NAMESERVER)
+RM = rm -rf
+MARKER = .compiled
+
+# Targets
+all: $(NAMECLIENT) $(NAMESERVER) $(MARKER)
 
 $(NAMECLIENT): $(OBJSCLIENT)
-	@echo "Building $(NAMECLIENT)"
-	@$(GCC) $(CFLAGS) -o $(NAMECLIENT) $(OBJSCLIENT)
+	@$(CC) $(CFLAGS) -o $(NAMECLIENT) $(OBJSCLIENT)
 
 $(NAMESERVER): $(OBJSERVER)
-	@echo "Building $(NAMESERVER)"
-	@$(GCC) $(CFLAGS) -o $(NAMESERVER) $(OBJSERVER)
+	$(CC) $(CFLAGS) -o $(NAMESERVER) $(OBJSERVER)
+
+$(MARKER): $(NAMECLIENT) $(NAMESERVER)
+	@touch $(MARKER)
+
+bonus: $(MARKER) $(NAMECLIENT_BONUS) $(NAMESERVER_BONUS)
+
+$(NAMECLIENT_BONUS): $(OBJSCLIENT_BONUS)
+	$(CC) $(CFLAGS) -o $(NAMECLIENT_BONUS) $(OBJSCLIENT_BONUS)
+
+$(NAMESERVER_BONUS): $(OBJSERVER_BONUS)
+	$(CC) $(CFLAGS) -o $(NAMESERVER_BONUS) $(OBJSERVER_BONUS)
 
 $(OBJDIR)/%.o: src/%.c
-	@echo "Compiling $< to $@"
-	@mkdir -p $(OBJDIR)
-	@$(GCC) $(CFLAGS) -c $< -o $@
+	mkdir -p $(OBJDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@echo "Cleaning up..."
-	@$(RM) $(OBJDIR)
+	$(RM) $(OBJDIR) $(MARKER)
 
 fclean: clean
-	@echo "Performing full clean..."
-	@$(RM) $(NAMECLIENT) $(NAMESERVER)
+	$(RM) $(NAMECLIENT) $(NAMESERVER) $(NAMECLIENT_BONUS) $(NAMESERVER_BONUS)
 
 re: fclean all
+
+.PHONY: all clean fclean re bonus

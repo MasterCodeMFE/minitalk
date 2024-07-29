@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../minitalk.h"
+#include "./../minitalk_bonus.h"
 
 volatile sig_atomic_t	g_confirm = 0;
 

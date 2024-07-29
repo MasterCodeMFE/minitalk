@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef MINITALK_H
+# define MINITALK_H
 
 # include <string.h>
 # include <strings.h>
@@ -19,9 +19,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
-#include <signal.h>
-#include <stdio.h>
-#include <sys/types.h>
+# include <signal.h>
+# include <stdio.h>
+# include <sys/types.h>
 
 int		ft_printf(char const *str, ...);
 void	ft_flag(va_list args, char c, int *len);

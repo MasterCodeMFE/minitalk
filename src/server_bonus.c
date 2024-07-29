@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../minitalk.h"
+#include "./../minitalk_bonus.h"
 
 static pid_t	g_pid_client;
 
